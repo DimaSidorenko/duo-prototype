@@ -106,6 +106,13 @@
   .feature:last-child{border-bottom:none}
   .feature .ok{color:var(--accent)}
   .feature .lab{flex:1}
+  /* профиль */
+  .avatar{width:64px;height:64px;border-radius:50%;background:var(--surface2);display:flex;
+          align-items:center;justify-content:center;font-size:22px;font-weight:600;color:var(--accent)}
+  .prow{display:flex;align-items:center;gap:12px;padding:15px 14px;background:var(--surface);
+        border-radius:12px;font-size:14px;cursor:pointer}
+  .prow .arr{margin-left:auto;color:var(--sec)}
+  .prow.danger{color:#FF5A6E}
   /* баннер перекалибровки */
   .banner{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surface);border:1px solid var(--track);border-radius:12px;font-size:13px;cursor:pointer}
   .banner .arr{margin-left:auto;color:var(--sec)}
@@ -225,11 +232,11 @@
     </div>
   </div>
   <div class="tabbar">
-    <div class="tab"><span class="ico"></span>Цели</div>
+    <div class="tab" data-nav="s12"><span class="ico"></span>Цели</div>
     <div class="tab" data-nav="s09"><span class="ico"></span>Аналитика</div>
     <div class="tab main"><span class="ico"></span>My Day</div>
     <div class="tab" data-nav="s08"><span class="ico"></span>Фокусы</div>
-    <div class="tab"><span class="ico"></span>Профиль</div>
+    <div class="tab" data-nav="s13"><span class="ico"></span>Профиль</div>
   </div>
 </section>
 
@@ -258,11 +265,11 @@
     <a class="btn primary">Добавить задачу</a>
   </div>
   <div class="tabbar">
-    <div class="tab"><span class="ico"></span>Цели</div>
+    <div class="tab" data-nav="s12"><span class="ico"></span>Цели</div>
     <div class="tab" data-nav="s09"><span class="ico"></span>Аналитика</div>
     <div class="tab main" data-nav="s07"><span class="ico"></span>My Day</div>
     <div class="tab"><span class="ico"></span>Фокусы</div>
-    <div class="tab"><span class="ico"></span>Профиль</div>
+    <div class="tab" data-nav="s13"><span class="ico"></span>Профиль</div>
   </div>
 </section>
 
@@ -291,11 +298,11 @@
     </div>
   </div>
   <div class="tabbar">
-    <div class="tab"><span class="ico"></span>Цели</div>
+    <div class="tab" data-nav="s12"><span class="ico"></span>Цели</div>
     <div class="tab" style="color:var(--text)"><span class="ico" style="border-color:var(--text)"></span>Аналитика</div>
     <div class="tab main" data-nav="s07"><span class="ico"></span>My Day</div>
     <div class="tab" data-nav="s08"><span class="ico"></span>Фокусы</div>
-    <div class="tab"><span class="ico"></span>Профиль</div>
+    <div class="tab" data-nav="s13"><span class="ico"></span>Профиль</div>
   </div>
 </section>
 
@@ -333,6 +340,97 @@
     <div class="spacer"></div>
     <a class="btn primary" data-nav="s07">Попробовать бесплатно</a>
     <span class="link" data-nav="s07">Остаться на Free</span>
+  </div>
+</section>
+
+<!-- ════ 12 · Цели ════ -->
+<section class="screen" id="s12">
+  <div class="content">
+    <h1>Цели</h1>
+    <div class="goal">
+      <div class="head"><b>Цель: Английский B2</b><span class="chev">▾</span></div>
+      <p class="cap">Карьера · 3 подцели · осталось 92 дня</p>
+      <p class="pct">33%<span>выполнено</span></p>
+      <div class="bar"><i style="width:33%"></i></div>
+      <div class="body">
+        <div class="task"><span class="box"></span><span class="label">Сходить на Speaking Club</span></div>
+        <div class="task"><span class="box"></span><span class="label">Урок грамматики</span></div>
+        <a class="btn secondary">Все подцели</a>
+      </div>
+    </div>
+    <div class="goal">
+      <div class="head"><b>Цель: Пробежать марафон</b><span class="chev">▾</span></div>
+      <p class="cap">Спорт · 4 подцели · осталось 174 дня</p>
+      <p class="pct">12%<span>выполнено</span></p>
+      <div class="bar"><i style="width:12%"></i></div>
+      <div class="body">
+        <div class="task"><span class="box"></span><span class="label">Пробежка 5 км</span></div>
+        <a class="btn secondary">Все подцели</a>
+      </div>
+    </div>
+    <div class="goal">
+      <div class="head"><b>Цель: Подушка 300 000 ₽</b><span class="chev">▾</span></div>
+      <p class="cap">Финансы · 2 подцели · осталось 290 дней</p>
+      <p class="pct">8%<span>выполнено</span></p>
+      <div class="bar"><i style="width:8%"></i></div>
+      <div class="body">
+        <div class="task"><span class="box"></span><span class="label">Отложить 5 000 ₽</span></div>
+        <a class="btn secondary">Все подцели</a>
+      </div>
+    </div>
+    <div class="goal">
+      <div class="head"><b>Цель: Спать 8 часов</b><span class="chev">▾</span></div>
+      <p class="cap">Сон · 1 подцель · постоянная</p>
+      <p class="pct">60%<span>выполнено</span></p>
+      <div class="bar"><i style="width:60%"></i></div>
+      <div class="body">
+        <div class="task"><span class="box"></span><span class="label">Лечь до 23:30</span></div>
+        <a class="btn secondary">Все подцели</a>
+      </div>
+    </div>
+    <a class="btn primary">+ Новая цель</a>
+  </div>
+  <div class="tabbar">
+    <div class="tab" style="color:var(--text)"><span class="ico" style="border-color:var(--text)"></span>Цели</div>
+    <div class="tab" data-nav="s09"><span class="ico"></span>Аналитика</div>
+    <div class="tab main" data-nav="s07"><span class="ico"></span>My Day</div>
+    <div class="tab" data-nav="s08"><span class="ico"></span>Фокусы</div>
+    <div class="tab" data-nav="s13"><span class="ico"></span>Профиль</div>
+  </div>
+</section>
+
+<!-- ════ 13 · Личный кабинет ════ -->
+<section class="screen" id="s13">
+  <div class="content">
+    <h1>Профиль</h1>
+    <div class="prow" style="cursor:default">
+      <div class="avatar">Д</div>
+      <div>
+        <div style="font-size:16px;font-weight:600">Дмитрий</div>
+        <div class="cap">в Duo с июня 2026</div>
+      </div>
+    </div>
+    <div class="prow" data-nav="s11">
+      <span>Тариф <b>Free</b> · 3 фокуса<span class="cap" style="display:block">Pro: 5 фокусов, аналитика, AI</span></span>
+      <span class="arr" style="color:var(--accent);font-weight:600">Перейти на Pro ›</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>178 см</b><span>рост</span></div>
+      <div class="stat"><b>72 кг</b><span>вес</span></div>
+      <div class="stat"><b>27</b><span>возраст</span></div>
+    </div>
+    <h3>Настройки</h3>
+    <div class="prow">Уведомления и напоминания<span class="arr">›</span></div>
+    <div class="prow" data-nav="s10">Перекалибровка фокусов<span class="arr">›</span></div>
+    <div class="prow">Экспорт данных<span class="arr">›</span></div>
+    <div class="prow danger">Выйти</div>
+  </div>
+  <div class="tabbar">
+    <div class="tab" data-nav="s12"><span class="ico"></span>Цели</div>
+    <div class="tab" data-nav="s09"><span class="ico"></span>Аналитика</div>
+    <div class="tab main" data-nav="s07"><span class="ico"></span>My Day</div>
+    <div class="tab" data-nav="s08"><span class="ico"></span>Фокусы</div>
+    <div class="tab" style="color:var(--text)"><span class="ico" style="border-color:var(--text)"></span>Профиль</div>
   </div>
 </section>
 
