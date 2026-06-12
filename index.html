@@ -86,6 +86,26 @@
   .qhead .bar{flex:1}
   .rings-row{display:flex;justify-content:space-between}
   .rings-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:20px 28px;padding:12px 0}
+  /* аналитика */
+  .seg{display:flex;background:var(--surface);border-radius:10px;padding:3px}
+  .seg div{flex:1;text-align:center;padding:8px;font-size:13px;color:var(--sec);border-radius:8px;cursor:pointer}
+  .seg .on{background:var(--surface2);color:var(--text);font-weight:600}
+  .stats{display:flex;gap:12px}
+  .stat{flex:1;background:var(--surface);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:4px}
+  .stat b{font-size:20px}
+  .stat span{font-size:11px;color:var(--sec)}
+  .bars{display:flex;align-items:flex-end;gap:8px;height:90px;padding:0 4px}
+  .bars i{flex:1;background:var(--track);border-radius:4px 4px 0 0}
+  .bars i.hi{background:var(--accent)}
+  .lock{background:var(--surface);border-radius:16px;padding:20px 16px;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+  /* пейволл */
+  .feature{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--track);font-size:14px}
+  .feature:last-child{border-bottom:none}
+  .feature .ok{color:var(--accent)}
+  .feature .lab{flex:1}
+  /* баннер перекалибровки */
+  .banner{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surface);border:1px solid var(--track);border-radius:12px;font-size:13px;cursor:pointer}
+  .banner .arr{margin-left:auto;color:var(--sec)}
 </style>
 </head>
 <body>
@@ -169,6 +189,7 @@
       <div class="ring-item"><div class="ring" data-ring="20,64,var(--f-orange)" data-nav="s08"><span class="val" style="font-size:14px">20%</span></div><span class="cap">Финансы</span></div>
       <div class="ring-item"><div class="ring" data-ring="55,64,var(--f-purple)" data-nav="s08"><span class="val" style="font-size:14px">55%</span></div><span class="cap">Близкие</span></div>
     </div>
+    <div class="banner" data-nav="s10">🌀 Прошёл месяц — пора пересчитать фокусы<span class="arr">›</span></div>
     <h3>Трекер задач</h3>
     <div class="task done"><span class="box"></span><span class="label">Сходить на Speaking Club</span><span class="chip">Английский</span></div>
     <div class="task"><span class="box"></span><span class="label">Тренировка в зале</span><span class="chip mint">Спорт</span></div>
@@ -202,7 +223,7 @@
   </div>
   <div class="tabbar">
     <div class="tab"><span class="ico"></span>Цели</div>
-    <div class="tab"><span class="ico"></span>Аналитика</div>
+    <div class="tab" data-nav="s09"><span class="ico"></span>Аналитика</div>
     <div class="tab main"><span class="ico"></span>My Day</div>
     <div class="tab" data-nav="s08"><span class="ico"></span>Фокусы</div>
     <div class="tab"><span class="ico"></span>Профиль</div>
@@ -235,10 +256,80 @@
   </div>
   <div class="tabbar">
     <div class="tab"><span class="ico"></span>Цели</div>
-    <div class="tab"><span class="ico"></span>Аналитика</div>
+    <div class="tab" data-nav="s09"><span class="ico"></span>Аналитика</div>
     <div class="tab main" data-nav="s07"><span class="ico"></span>My Day</div>
     <div class="tab"><span class="ico"></span>Фокусы</div>
     <div class="tab"><span class="ico"></span>Профиль</div>
+  </div>
+</section>
+
+<!-- ════ 09 · Аналитика ════ -->
+<section class="screen" id="s09">
+  <div class="content">
+    <h1>Аналитика</h1>
+    <div class="seg"><div class="on">Неделя</div><div>Месяц</div></div>
+    <div class="stats">
+      <div class="stat"><b>18 / 24</b><span>задач выполнено</span></div>
+      <div class="stat"><b>6 дней</b><span>текущий стрик 🔥</span></div>
+    </div>
+    <div>
+      <div class="bars">
+        <i class="hi" style="height:60%"></i><i class="hi" style="height:80%"></i><i style="height:30%"></i>
+        <i class="hi" style="height:100%"></i><i class="hi" style="height:70%"></i><i class="hi" style="height:90%"></i>
+        <i style="height:20%"></i>
+      </div>
+      <p class="cap" style="text-align:center;margin-top:8px">Выполнение задач · пн–вс</p>
+    </div>
+    <div class="lock">
+      <span style="font-size:24px">🔒</span>
+      <b style="font-size:15px">Динамика колёс и AI-инсайты — в Duo Pro</b>
+      <p class="cap">Сравнение месяцев, тренды по каждому фокусу и персональные рекомендации</p>
+      <a class="btn primary" data-nav="s11">Открыть Pro</a>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><span class="ico"></span>Цели</div>
+    <div class="tab" style="color:var(--text)"><span class="ico" style="border-color:var(--text)"></span>Аналитика</div>
+    <div class="tab main" data-nav="s07"><span class="ico"></span>My Day</div>
+    <div class="tab" data-nav="s08"><span class="ico"></span>Фокусы</div>
+    <div class="tab"><span class="ico"></span>Профиль</div>
+  </div>
+</section>
+
+<!-- ════ 10 · Перекалибровка ════ -->
+<section class="screen" id="s10">
+  <div class="content center" style="padding-top:48px">
+    <h1>Перекалибровка</h1>
+    <p class="sub">Прошёл месяц с последнего теста.<br>Ответь на 12 вопросов — пересчитаем<br>фокусы и скорректируем цели.</p>
+    <div class="rings-grid">
+      <div class="ring-item"><div class="ring" data-ring="60,64,var(--f-blue)"><span class="val" style="font-size:14px">60%</span></div><span class="cap">Сон</span></div>
+      <div class="ring-item"><div class="ring" data-ring="40,64,var(--f-mint)"><span class="val" style="font-size:14px">40%</span></div><span class="cap">Спорт</span></div>
+      <div class="ring-item"><div class="ring" data-ring="75,64,var(--f-yellow)"><span class="val" style="font-size:14px">75%</span></div><span class="cap">Карьера</span></div>
+    </div>
+    <p class="sub">Весь текущий прогресс сохранится —<br>обновятся только приоритеты.</p>
+    <div class="spacer"></div>
+    <a class="btn primary" data-nav="s04">Пройти тест · 3–5 мин</a>
+    <span class="link" data-nav="s07">Напомнить позже</span>
+  </div>
+</section>
+
+<!-- ════ 11 · Пейволл ════ -->
+<section class="screen" id="s11">
+  <div class="content">
+    <div class="center" style="display:flex;flex-direction:column;gap:8px">
+      <h1>Duo Pro</h1>
+      <p class="sub">Раскрой все пять фокусов</p>
+    </div>
+    <div style="background:var(--surface);border-radius:16px;padding:4px 16px">
+      <div class="feature"><span class="ok">✓</span><span class="lab">5 фокусов вместо 3</span></div>
+      <div class="feature"><span class="ok">✓</span><span class="lab">Аналитика недели и месяца</span></div>
+      <div class="feature"><span class="ok">✓</span><span class="lab">AI-рекомендации по целям</span></div>
+      <div class="feature"><span class="ok">✓</span><span class="lab">Всё, что есть во Free</span></div>
+    </div>
+    <p class="sub" style="text-align:center">299 ₽/мес · первый месяц бесплатно<br>Отменить можно в любой момент</p>
+    <div class="spacer"></div>
+    <a class="btn primary" data-nav="s07">Попробовать бесплатно</a>
+    <span class="link" data-nav="s07">Остаться на Free</span>
   </div>
 </section>
 
