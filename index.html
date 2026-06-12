@@ -21,6 +21,9 @@
   .screen.active{display:flex}
   @keyframes slide{from{transform:translateX(40px);opacity:.5}to{transform:none;opacity:1}}
   body.static .screen{animation:none}
+  /* режим капчи: без центрирования, телефон прибит к (0,0) */
+  body.static{display:block;background:var(--bg);overflow-x:hidden}
+  body.static .phone{margin:0;width:375px}
   .content{flex:1;padding:24px 16px;display:flex;flex-direction:column;gap:20px}
   .center{align-items:center;text-align:center}
   h1{font-size:24px;font-weight:600}
