@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duo — прототип</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1216; --surface:#1A1F26; --surface2:#242B34;
+    --text:#FFFFFF; --sec:#9AA4B0; --accent:#2EE6A8; --track:#2E3641;
+    --f-blue:#5AA9FF; --f-yellow:#FFD23F; --f-mint:#2EE6A8; --f-purple:#B28DFF; --f-orange:#FF9A5A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0A0C0E;font-family:'Inter',-apple-system,sans-serif;color:var(--text);
+       display:flex;justify-content:center;min-height:100vh}
+  .phone{width:375px;min-height:812px;background:var(--bg);position:relative;overflow:hidden}
+  .screen{display:none;flex-direction:column;min-height:812px;animation:slide .25s ease-out}
+  .screen.active{display:flex}
+  @keyframes slide{from{transform:translateX(40px);opacity:.5}to{transform:none;opacity:1}}
+  body.static .screen{animation:none}
+  .content{flex:1;padding:24px 16px;display:flex;flex-direction:column;gap:20px}
+  .center{align-items:center;text-align:center}
+  h1{font-size:24px;font-weight:600}
+  h2{font-size:20px;font-weight:600}
+  h3{font-size:16px;font-weight:600}
+  .cap{font-size:12px;color:var(--sec)}
+  .sub{font-size:14px;color:var(--sec);line-height:1.5}
+  .spacer{flex:1}
+  .btn{display:block;width:100%;padding:14px 24px;border-radius:12px;border:none;
+       font-family:inherit;font-size:15px;font-weight:600;text-align:center;cursor:pointer;text-decoration:none;color:var(--text)}
+  .btn.primary{background:var(--accent);color:var(--bg)}
+  .btn.secondary{background:var(--surface2)}
+  .link{font-size:13px;color:var(--sec);text-align:center;cursor:pointer;text-decoration:underline}
+  /* кольцо прогресса */
+  .ring{position:relative;display:inline-block}
+  .ring svg{transform:rotate(-90deg);display:block}
+  .ring .val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:600}
+  .ring-item{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .ring-item .cap{font-size:11px}
+  /* задачи */
+  .task{display:flex;align-items:center;gap:12px;padding:14px;background:var(--surface);border-radius:12px;cursor:pointer}
+  .task .box{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--track);flex:none}
+  .task.done .box{background:var(--accent);border-color:var(--accent);position:relative}
+  .task.done .box::after{content:'';position:absolute;left:6px;top:2px;width:6px;height:11px;
+    border:solid var(--bg);border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .task .label{flex:1;font-size:14px}
+  .task.done .label{color:var(--sec);text-decoration:line-through}
+  .chip{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;border:1px solid var(--f-blue);color:var(--f-blue)}
+  .chip.mint{border-color:var(--f-mint);color:var(--f-mint)}
+  .chip.orange{border-color:var(--f-orange);color:var(--f-orange)}
+  /* карточка цели */
+  .goal{background:var(--surface);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;cursor:pointer}
+  .goal .head{display:flex;align-items:center;gap:8px}
+  .goal .head b{flex:1;font-size:14px;font-weight:600}
+  .goal .chev{color:var(--sec);transition:transform .2s}
+  .goal.open .chev{transform:rotate(180deg)}
+  .goal .pct{font-size:14px;font-weight:600;color:var(--accent)}
+  .goal .pct span{font-size:12px;font-weight:400;color:var(--sec);margin-left:6px}
+  .bar{height:6px;border-radius:99px;background:var(--track);overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+  .goal .body{display:none;flex-direction:column;gap:10px}
+  .goal.open .body{display:flex}
+  /* опции теста / целей */
+  .opt{display:flex;align-items:center;gap:12px;padding:16px;background:var(--surface);
+       border:1.5px solid transparent;border-radius:12px;font-size:14px;cursor:pointer}
+  .opt.selected{border-color:var(--accent)}
+  .opt .radio{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--track);flex:none;margin-left:auto}
+  .opt.selected .radio{background:var(--accent);border-color:var(--accent)}
+  .opt .meta{display:block;font-size:12px;color:var(--sec);margin-top:3px}
+  .opt.ghost{border:1.5px dashed var(--track);background:none;color:var(--sec);justify-content:center}
+  /* таб-бар */
+  .tabbar{display:flex;align-items:center;padding:10px 8px 18px;background:var(--surface)}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;
+       font-weight:500;color:var(--sec);cursor:pointer}
+  .tab .ico{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--sec)}
+  .tab.main{color:var(--text)}
+  .tab.main .ico{width:40px;height:40px;background:var(--accent);border:none}
+  /* шапки */
+  .nav{display:flex;align-items:center;gap:12px;cursor:pointer}
+  .nav .backico{color:var(--text);font-size:20px;line-height:1}
+  .qhead{display:flex;align-items:center;gap:12px}
+  .qhead .cap{white-space:nowrap}
+  .qhead .bar{flex:1}
+  .rings-row{display:flex;justify-content:space-between}
+  .rings-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:20px 28px;padding:12px 0}
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- ════ 03 · Онбординг ════ -->
+<section class="screen" id="s03">
+  <div class="content center" style="padding-top:80px">
+    <div class="ring" data-ring="100,120,var(--accent)"><span class="val" style="font-size:24px">Duo</span></div>
+    <h1>Личный коуч в кармане</h1>
+    <p class="sub">Фокус на 5 главных целях.<br>Видимый прогресс каждый день.</p>
+    <div class="spacer"></div>
+    <a class="btn primary" data-nav="s04">Создать аккаунт</a>
+    <a class="btn secondary" data-nav="s04">Войти</a>
+    <p class="cap">Первый месяц Pro — бесплатно</p>
+  </div>
+</section>
+
+<!-- ════ 04 · Тест-опрос ════ -->
+<section class="screen" id="s04">
+  <div class="content">
+    <div class="qhead">
+      <span class="cap">Вопрос 4 из 12</span>
+      <div class="bar"><i style="width:33%"></i></div>
+    </div>
+    <h2>Что для тебя сейчас важнее всего?</h2>
+    <div class="opt">Здоровье и энергия<span class="radio"></span></div>
+    <div class="opt selected">Карьера и рост<span class="radio"></span></div>
+    <div class="opt">Отношения и близкие<span class="radio"></span></div>
+    <div class="opt">Финансовая подушка<span class="radio"></span></div>
+    <div class="spacer"></div>
+    <a class="btn primary" data-nav="s05">Дальше</a>
+  </div>
+</section>
+
+<!-- ════ 05 · Карта фокусов ════ -->
+<section class="screen" id="s05">
+  <div class="content center" style="padding-top:48px">
+    <h1>Твоя карта фокусов</h1>
+    <p class="sub">Вот что сейчас важно для тебя.<br>Мы построили её по твоим ответам.</p>
+    <div class="rings-grid">
+      <div class="ring-item"><div class="ring" data-ring="100,96,var(--f-mint)"><span class="val" style="font-size:20px">№1</span></div><span class="cap">Спорт</span></div>
+      <div class="ring-item"><div class="ring" data-ring="100,96,var(--f-blue)"><span class="val" style="font-size:20px">№2</span></div><span class="cap">Сон</span></div>
+      <div class="ring-item"><div class="ring" data-ring="100,96,var(--f-yellow)"><span class="val" style="font-size:20px">№3</span></div><span class="cap">Карьера</span></div>
+      <div class="ring-item"><div class="ring" data-ring="100,96,var(--f-orange)"><span class="val" style="font-size:20px">№4</span></div><span class="cap">Финансы</span></div>
+      <div class="ring-item"><div class="ring" data-ring="100,96,var(--f-purple)"><span class="val" style="font-size:20px">№5</span></div><span class="cap">Близкие</span></div>
+    </div>
+    <div class="spacer"></div>
+    <a class="btn primary" data-nav="s06">Выбрать цели</a>
+    <span class="link" data-nav="s04">Пройти тест заново</span>
+  </div>
+</section>
+
+<!-- ════ 06 · Выбор целей ════ -->
+<section class="screen" id="s06">
+  <div class="content">
+    <div class="qhead">
+      <span class="cap">Фокус 1 из 5</span>
+      <div class="bar"><i style="width:20%"></i></div>
+    </div>
+    <h2>Выбери цели для «Спорт»</h2>
+    <div class="opt selected"><span>Пробежать марафон<span class="meta">срок: 6 месяцев · 4 подцели</span></span><span class="radio"></span></div>
+    <div class="opt"><span>Тренировки 3 раза в неделю<span class="meta">срок: 3 месяца · 2 подцели</span></span><span class="radio"></span></div>
+    <div class="opt ghost">+ Своя цель</div>
+    <div class="spacer"></div>
+    <a class="btn primary" data-nav="s07">Дальше: Карьера</a>
+  </div>
+</section>
+
+<!-- ════ 07 · Мой день ════ -->
+<section class="screen" id="s07">
+  <div class="content">
+    <div>
+      <p class="cap">Четверг, 12 июня</p>
+      <h1>Мой день</h1>
+    </div>
+    <div class="rings-row">
+      <div class="ring-item"><div class="ring" data-ring="60,64,var(--f-blue)" data-nav="s08"><span class="val" style="font-size:14px">60%</span></div><span class="cap">Сон</span></div>
+      <div class="ring-item"><div class="ring" data-ring="40,64,var(--f-mint)" data-nav="s08"><span class="val" style="font-size:14px">40%</span></div><span class="cap">Спорт</span></div>
+      <div class="ring-item"><div class="ring" data-ring="75,64,var(--f-yellow)" data-nav="s08"><span class="val" style="font-size:14px">75%</span></div><span class="cap">Карьера</span></div>
+      <div class="ring-item"><div class="ring" data-ring="20,64,var(--f-orange)" data-nav="s08"><span class="val" style="font-size:14px">20%</span></div><span class="cap">Финансы</span></div>
+      <div class="ring-item"><div class="ring" data-ring="55,64,var(--f-purple)" data-nav="s08"><span class="val" style="font-size:14px">55%</span></div><span class="cap">Близкие</span></div>
+    </div>
+    <h3>Трекер задач</h3>
+    <div class="task done"><span class="box"></span><span class="label">Сходить на Speaking Club</span><span class="chip">Английский</span></div>
+    <div class="task"><span class="box"></span><span class="label">Тренировка в зале</span><span class="chip mint">Спорт</span></div>
+    <div class="task"><span class="box"></span><span class="label">Отложить 5 000 ₽</span><span class="chip orange">Финансы</span></div>
+    <h3>Каждый день</h3>
+    <div class="task done"><span class="box"></span><span class="label">Витамины</span></div>
+    <div class="task"><span class="box"></span><span class="label">Читать 20 минут</span></div>
+    <h3>Цели</h3>
+    <div class="goal open">
+      <div class="head"><b>Цель: Английский B2</b><span class="chev">▾</span></div>
+      <p class="cap">3 подцели · осталось 92 дня</p>
+      <p class="pct">33%<span>выполнено</span></p>
+      <div class="bar"><i style="width:33%"></i></div>
+      <div class="body">
+        <div class="task"><span class="box"></span><span class="label">Сходить на Speaking Club</span><span class="chip">Английский</span></div>
+        <div class="task"><span class="box"></span><span class="label">Урок грамматики</span><span class="chip">Английский</span></div>
+        <div class="task"><span class="box"></span><span class="label">30 новых слов</span><span class="chip">Английский</span></div>
+        <a class="btn secondary">Все подцели</a>
+      </div>
+    </div>
+    <div class="goal">
+      <div class="head"><b>Цель: Марафон через 6 мес</b><span class="chev">▾</span></div>
+      <p class="cap">4 подцели · осталось 174 дня</p>
+      <p class="pct">12%<span>выполнено</span></p>
+      <div class="bar"><i style="width:12%"></i></div>
+      <div class="body">
+        <div class="task"><span class="box"></span><span class="label">Пробежка 5 км</span><span class="chip mint">Спорт</span></div>
+        <a class="btn secondary">Все подцели</a>
+      </div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><span class="ico"></span>Цели</div>
+    <div class="tab"><span class="ico"></span>Аналитика</div>
+    <div class="tab main"><span class="ico"></span>My Day</div>
+    <div class="tab" data-nav="s08"><span class="ico"></span>Фокусы</div>
+    <div class="tab"><span class="ico"></span>Профиль</div>
+  </div>
+</section>
+
+<!-- ════ 08 · Фокус «Спорт» ════ -->
+<section class="screen" id="s08">
+  <div class="content">
+    <div class="nav" data-nav="s07"><span class="backico">‹</span><h1>Спорт</h1></div>
+    <div class="center" style="display:flex;flex-direction:column;gap:10px">
+      <div class="ring" data-ring="60,120,var(--accent)"><span class="val" style="font-size:24px">60%</span></div>
+      <span class="cap">прогресс за месяц</span>
+    </div>
+    <h3>Задачи на сегодня</h3>
+    <div class="task done"><span class="box"></span><span class="label">Сходить в зал</span></div>
+    <div class="task done"><span class="box"></span><span class="label">2 000 ккал</span></div>
+    <div class="task"><span class="box"></span><span class="label">Пробежка 5 км</span></div>
+    <div class="goal">
+      <div class="head"><b>Цель: Пробежать марафон</b><span class="chev">▾</span></div>
+      <p class="cap">4 подцели · осталось 174 дня</p>
+      <p class="pct">12%<span>выполнено</span></p>
+      <div class="bar"><i style="width:12%"></i></div>
+      <div class="body">
+        <div class="task"><span class="box"></span><span class="label">Пробежка 5 км</span></div>
+        <a class="btn secondary">Все подцели</a>
+      </div>
+    </div>
+    <a class="btn primary">Добавить задачу</a>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><span class="ico"></span>Цели</div>
+    <div class="tab"><span class="ico"></span>Аналитика</div>
+    <div class="tab main" data-nav="s07"><span class="ico"></span>My Day</div>
+    <div class="tab"><span class="ico"></span>Фокусы</div>
+    <div class="tab"><span class="ico"></span>Профиль</div>
+  </div>
+</section>
+
+</div>
+<script>
+// рисуем кольца: data-ring="процент,размер,цвет"
+document.querySelectorAll('[data-ring]').forEach(el => {
+  const [pct, size, color] = el.dataset.ring.split(',').map(s => s.trim());
+  const s = +size, r = (s - 10) / 2, c = 2 * Math.PI * r;
+  el.insertAdjacentHTML('afterbegin',
+    `<svg width="${s}" height="${s}">
+       <circle cx="${s/2}" cy="${s/2}" r="${r}" fill="none" stroke="var(--track)" stroke-width="8"/>
+       <circle cx="${s/2}" cy="${s/2}" r="${r}" fill="none" stroke="${color}" stroke-width="8"
+               stroke-linecap="round" stroke-dasharray="${c*pct/100} ${c}"/>
+     </svg>`);
+});
+// навигация
+function show(id){
+  document.querySelectorAll('.screen').forEach(x => x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('[data-nav]').forEach(el =>
+  el.addEventListener('click', e => { e.stopPropagation(); show(el.dataset.nav); }));
+// выпадашки целей
+document.querySelectorAll('.goal .head').forEach(h =>
+  h.addEventListener('click', () => h.parentElement.classList.toggle('open')));
+// чекбоксы кликаются
+document.querySelectorAll('.task .box').forEach(b =>
+  b.addEventListener('click', e => { e.stopPropagation(); b.parentElement.classList.toggle('done'); }));
+// статичный режим для капчи в Figma: ?screen=s03
+const params = new URLSearchParams(location.search);
+if (params.get('screen')) { document.body.classList.add('static'); show(params.get('screen')); }
+else show('s03');
+</script>
+</body>
+</html>
